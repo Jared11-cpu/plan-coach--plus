@@ -1,5 +1,7 @@
 # Plan Coach: AI Execution Map
 
+[Live Demo](https://jared11-cpu.github.io/plan-coach--plus/) | [Project Explanation](docs/project-explanation.md) | [Mind Map](docs/mind-map.md) | [Code Architecture](docs/code-architecture.md)
+
 Plan Coach is an AI execution system for turning emotional, messy goals into a visual action map, then turning completed actions into proof for demos, pitches, and reviews.
 
 It is not a normal todo list. A todo list assumes the user already knows what to do. Plan Coach helps the user find the first small action, visualize the execution path, complete the work, and convert progress into visible evidence.
@@ -83,6 +85,16 @@ For verification:
 npm run typecheck
 npm run build
 ```
+
+## Online Demo
+
+After every push to `main`, GitHub Actions builds the static Next.js site and deploys it to GitHub Pages:
+
+```txt
+https://jared11-cpu.github.io/plan-coach--plus/
+```
+
+If the link shows a GitHub 404 right after pushing, wait for the `Deploy to GitHub Pages` workflow to finish in the repository Actions tab.
 
 ## Future Extensions
 
