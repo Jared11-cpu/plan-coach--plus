@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Brain, CheckCircle2, Flame, HeartHandshake, Sparkles } from "lucide-react";
-import { BigTaskCard } from "@/components/big-task-card";
+import { Brain, CheckCircle2, Flame, Sparkles } from "lucide-react";
 import { CoachPanel } from "@/components/coach-panel";
 import { ConfettiEffect } from "@/components/confetti-effect";
 import { DemoStoryBuilder } from "@/components/demo-story-builder";
@@ -17,10 +16,8 @@ import { MinimumViableWinSection } from "@/components/minimum-viable-win-section
 import { ProofWall } from "@/components/proof-wall";
 import { ProjectInnovationSection } from "@/components/project-innovation-section";
 import { ReadinessScoreCard } from "@/components/readiness-score-card";
-import { ProgressRing } from "@/components/progress-ring";
 import { ReviewAnalyticsSection } from "@/components/review-analytics-section";
-import { TodayMainTaskCard } from "@/components/today-main-task-card";
-import { Button } from "@/components/ui/button";
+import { TaskPunchSession } from "@/components/task-punch-session";
 import { cn } from "@/lib/utils";
 import { usePlanStore } from "@/store/use-plan-store";
 
@@ -51,13 +48,10 @@ const floatingFragments = [
 ];
 
 export function PlanCoachLandingExperience() {
-  const planRef = useRef<HTMLElement | null>(null);
+  const planRef = useRef<HTMLDivElement | null>(null);
   const [showPlan, setShowPlan] = useState(false);
   const {
-    activeGoal,
     plan,
-    tasks,
-    streak,
     proofs,
     demoStory,
     judgeSimulations,
@@ -69,26 +63,14 @@ export function PlanCoachLandingExperience() {
     coachBanner,
     isGeneratingPlan,
     generatePlanForGoal,
-    completeTask,
-    skipTask,
-    breakTask,
-    activateLowEnergyMode,
     clearCoachBanner,
-    setFocusTask,
     generateDemoStoryForGoal,
     generateJudgeSimulationsForGoal,
     activateMinimumViableWin,
     generateFinalMemoryLineForGoal
   } = usePlanStore();
 
-  const visibleTasks = useMemo(
-    () => (lowEnergyMode ? tasks.filter((task) => task.isMain) : tasks.filter((task) => task.status !== "deferred")),
-    [lowEnergyMode, tasks]
-  );
   const shouldShowPlan = showPlan || Boolean(plan);
-  const mainTask = visibleTasks.find((task) => task.isMain) ?? visibleTasks[0];
-  const completedCount = visibleTasks.filter((task) => task.status === "completed").length;
-  const completionRate = visibleTasks.length ? Math.round((completedCount / visibleTasks.length) * 100) : 0;
 
   useEffect(() => {
     if (!coachBanner) return;
@@ -205,92 +187,11 @@ export function PlanCoachLandingExperience() {
 
       {shouldShowPlan ? (
         <>
+          <div ref={planRef}>
+            <TaskPunchSession />
+          </div>
+
           <ExecutionMindMap />
-
-          <section id="plan" ref={planRef} className="scroll-mt-24 px-5 py-24 sm:px-8">
-            <div className="mx-auto max-w-[1500px]">
-              <div className="mb-10 flex flex-col gap-8 xl:flex-row xl:items-end xl:justify-between">
-                <div>
-                  <p className="mb-5 inline-flex items-center gap-3 rounded-full border border-[#ded7cc] bg-[#fbf7ef]/80 px-5 py-3 text-base font-black text-[#6f675e] shadow-sm backdrop-blur">
-                    <Sparkles className="h-5 w-5 text-[#0f9f8c]" />
-                    当前目标：{activeGoal.title}
-                  </p>
-                  <h2 className="max-w-6xl text-5xl font-black leading-[1.02] tracking-[-0.07em] text-[#211f1c] sm:text-7xl lg:text-8xl">
-                    今天，你只需要推进一个可证明成果。
-                  </h2>
-                </div>
-                <Button
-                  variant="warm"
-                  size="xl"
-                  data-testid="landing-low-energy-mode"
-                  className="rounded-full bg-[#f6ca42] text-xl text-[#211f1c] shadow-[0_22px_70px_rgba(212,158,24,0.24)] hover:bg-[#ffd95a]"
-                  onClick={activateLowEnergyMode}
-                >
-                  <HeartHandshake className="mr-3 h-6 w-6" />
-                  我今天状态不好
-                </Button>
-              </div>
-
-              {mainTask ? (
-                <TodayMainTaskCard
-                  task={mainTask}
-                  activePulse={completionPulse?.taskId === mainTask.id}
-                  onComplete={completeTask}
-                  onFocus={setFocusTask}
-                  focusHref="#focus"
-                />
-              ) : null}
-
-              <div className="mt-8 grid gap-6 lg:grid-cols-4">
-                <div className="rounded-[2.5rem] border border-[#e7ded1] bg-[#fbf7ef]/78 p-7 shadow-[0_25px_80px_rgba(43,38,30,0.08)]">
-                  <ProgressRing value={completionRate} size={180} />
-                </div>
-                <div className="rounded-[2.5rem] border border-[#e7ded1] bg-white/58 p-8 shadow-[0_25px_80px_rgba(43,38,30,0.07)]">
-                  <p className="text-base font-black uppercase tracking-[0.24em] text-[#81796e]">Streak</p>
-                  <motion.p
-                    key={streak}
-                    initial={{ scale: 0.92 }}
-                    animate={{ scale: [1, 1.06, 1] }}
-                    className="mt-5 text-7xl font-black tracking-[-0.08em] text-[#211f1c]"
-                  >
-                    {streak}
-                  </motion.p>
-                </div>
-                <div className="rounded-[2.5rem] border border-[#cfe8df] bg-[#eef8f3]/82 p-8 shadow-[0_25px_80px_rgba(43,38,30,0.07)]">
-                  <p className="text-base font-black uppercase tracking-[0.24em] text-[#0f766e]">AI 今日评价</p>
-                  <p className="mt-5 text-2xl font-black leading-9 text-[#123f39]">
-                    {completionRate >= 75
-                      ? "今天的节奏非常稳，可以收尾而不是继续加压。"
-                      : lowEnergyMode
-                        ? "低能量模式已开启，守住最小行动就是胜利。"
-                        : "先完成最小行动，后面的任务会更容易启动。"}
-                  </p>
-                </div>
-                <ReadinessScoreCard readiness={readinessScore} proofCount={proofs.length} />
-              </div>
-            </div>
-          </section>
-
-          <section id="tasks" className="scroll-mt-24 px-5 py-24 sm:px-8">
-            <div className="mx-auto max-w-[1500px]">
-              <p className="mb-5 text-base font-black uppercase tracking-[0.3em] text-[#81796e]">Task Breakdown</p>
-              <h2 className="max-w-5xl text-5xl font-black leading-[1.02] tracking-[-0.07em] text-[#211f1c] sm:text-7xl">
-                不是任务列表，是今天的行动地图。
-              </h2>
-              <div className="mt-12 grid gap-6">
-                {visibleTasks.map((task) => (
-                  <BigTaskCard
-                    key={task.id}
-                    task={task}
-                    activePulse={completionPulse?.taskId === task.id}
-                    onComplete={completeTask}
-                    onSkip={skipTask}
-                    onBreakDown={(id) => void breakTask(id)}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
 
           <ProofWall proofs={proofs} />
 
