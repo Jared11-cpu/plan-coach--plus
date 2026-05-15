@@ -1,6 +1,6 @@
 # Plan Coach: AI Execution Map
 
-[Live Demo](https://jared11-cpu.github.io/plan-coach--plus/) | [Project Explanation](docs/project-explanation.md) | [Mind Map](docs/mind-map.md) | [Code Architecture](docs/code-architecture.md)
+[Live Demo](https://jared11-cpu.github.io/plan-coach--plus/) | [Mobile Preview](https://jared11-cpu.github.io/plan-coach--plus/mobile/) | [Project Explanation](docs/project-explanation.md) | [Mind Map](docs/mind-map.md) | [Code Architecture](docs/code-architecture.md)
 
 Plan Coach is an AI execution system for turning emotional, messy goals into a visual action map, then turning completed actions into proof for demos, pitches, and reviews.
 
@@ -95,6 +95,35 @@ https://jared11-cpu.github.io/plan-coach--plus/
 ```
 
 If the link shows a GitHub 404 right after pushing, wait for the `Deploy to GitHub Pages` workflow to finish in the repository Actions tab.
+
+## Mobile APK
+
+The repository also includes a mobile-first Android APK version powered by Capacitor.
+
+- Mobile preview route: `https://jared11-cpu.github.io/plan-coach--plus/mobile/`
+- APK app name: `Plan Coach Plus`
+- APK package id: `com.plancoach.plus`
+- Main mobile rule: one full-screen card at a time, no long page scrolling.
+
+Build the mobile web bundle:
+
+```bash
+npm run build:mobile-web
+npm run cap:sync
+```
+
+Build a debug APK locally when Android SDK is installed:
+
+```bash
+npm run apk:debug
+```
+
+Without a local Android SDK, use the GitHub Actions workflow:
+
+1. Open the repository Actions tab.
+2. Run `Build Android APK`.
+3. Download the artifact named `PlanCoachPlus-debug-apk`.
+4. Install `app-debug.apk` on an Android phone.
 
 ## Future Extensions
 

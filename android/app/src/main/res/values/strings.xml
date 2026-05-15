@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Plan Coach Plus</string>
+    <string name="title_activity_main">Plan Coach Plus</string>
+    <string name="package_name">com.plancoach.plus</string>
+    <string name="custom_url_scheme">com.plancoach.plus</string>
+</resources>
