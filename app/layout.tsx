@@ -2,14 +2,26 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Plan Coach Web",
-  description: "高级 AI 计划教练网页，把混乱目标拆成每天能完成的小行动。"
+  title: "Word Punch 打卡",
+  description: "手机端全屏单词小任务打卡应用，每天用 3 个微任务完成一个单词。",
+  applicationName: "Word Punch",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Word Punch"
+  },
+  formatDetection: {
+    telephone: false
+  }
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f8fafc"
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: "#211f1c"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
