@@ -1,11 +1,5 @@
-import { MinimalNavbar } from "@/components/minimal-navbar";
-import { PlanCoachLandingExperience } from "@/components/plan-coach-landing-experience";
+import { MobileWordCheckinApp } from "@/components/mobile-word-checkin-app";
 
 export default function HomePage() {
-  return (
-    <>
-      <MinimalNavbar />
-      <PlanCoachLandingExperience />
-    </>
-  );
+  return <MobileWordCheckinApp />;
 }
