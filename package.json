@@ -5,10 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export:apk": "CAPACITOR=true next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "cap:sync": "capacitor sync android",
+    "apk:debug": "npm run export:apk && npx cap sync android && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
     "@radix-ui/react-slot": "^1.2.3",
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
@@ -22,6 +27,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.4",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
