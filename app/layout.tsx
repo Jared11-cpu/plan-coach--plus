@@ -3,8 +3,8 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Plan Coach Plus",
-  description: "Plan Coach Plus 手机端全屏任务打卡应用，把目标变成一张张可完成的行动卡。",
+  title: "Plan Coach Web",
+  description: "高级 AI 计划教练网页，把目标变成行动，把行动变成证据。",
   applicationName: "Plan Coach Plus",
   appleWebApp: {
     capable: true,
@@ -19,10 +19,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
   viewportFit: "cover",
-  themeColor: "#211f1c"
+  themeColor: "#f8fafc"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -33,7 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {`
             (function () {
               var isCapacitor = Boolean(window.Capacitor);
-              var isCapacitorLocalHost = window.location.hostname === "localhost";
+              var isCapacitorLocalHost = window.location.protocol === "https:" && window.location.hostname === "localhost";
               var path = window.location.pathname.replace(/\\/+$/, "");
               if ((isCapacitor || isCapacitorLocalHost) && (path === "" || path === "/")) {
                 window.location.replace("/mobile/");
